@@ -1,0 +1,12 @@
+{
+  "extends": "./node_modules/@adonisjs/mrm-preset/_tsconfig",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "types": [
+      "@adonisjs/core",
+      "@adonisjs/session",
+      "@adonisjs/redis"
+    ]
+  }
+}

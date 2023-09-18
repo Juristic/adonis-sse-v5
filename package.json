@@ -1,0 +1,89 @@
+{
+   "name": "@isimisi/adonis-sse",
+   "version": "1.2.3",
+   "description": "Adonis SSE plugin",
+   "main": "build/providers/SSEProvider.js",
+   "types": "build/adonis-typings/index.d.ts",
+   "scripts": {
+      "mrm": "mrm --preset=@adonisjs/mrm-preset",
+      "pretest": "npm run lint",
+      "test": "node -r @adonisjs/require-ts/build/register bin/test.ts",
+      "clean": "del-cli build",
+      "compile": "npm run clean && tsc && npm run copy:files",
+      "build": "npm run compile",
+      "prepublishOnly": "npm run build",
+      "copy:files": "copyfiles \"templates/**/*.txt\" build && npm run copy:instructions_md",
+      "copy:instructions_md": "copyfiles \"instructions.md\" build",
+      "commit": "git-cz"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/isimisi/adonis-sse-v5.git"
+   },
+   "author": "isimisi",
+   "license": "MIT",
+   "bugs": {
+      "url": "https://github.com/isimisi/adonis-sse-v5/issues"
+   },
+   "homepage": "https://github.com/isimisi/adonis-sse-v5#readme",
+   "peerDependencies": {
+      "@adonisjs/core": "^5.9.0",
+      "@adonisjs/redis": "^7.3.2",
+      "@adonisjs/session": "^6.4.0",
+      "uuid": "^9.0.0"
+   },
+   "peerDependenciesMeta": {
+      "@adonisjs/redis": {
+         "optional": true
+      }
+   },
+   "devDependencies": {
+      "@adonisjs/core": "^5.9.0",
+      "@adonisjs/mrm-preset": "^5.0.3",
+      "@adonisjs/redis": "^7.3.2",
+      "@adonisjs/require-ts": "^2.0.13",
+      "@adonisjs/session": "^6.4.0",
+      "@types/node": "^20.4.1",
+      "@types/uuid": "^9.0.2",
+      "cz-conventional-changelog": "^3.3.0",
+      "del-cli": "^5.0.0",
+      "husky": "^8.0.3",
+      "mrm": "^4.1.17",
+      "typescript": "^5.1.6"
+   },
+   "mrmConfig": {
+      "core": false,
+      "license": "MIT",
+      "services": [],
+      "minNodeVersion": "16.13.1",
+      "probotApps": []
+   },
+   "files": [
+      "build/adonis-typings",
+      "build/providers",
+      "build/src",
+      "build/templates",
+      "build/decorators",
+      "build/instructions.md"
+   ],
+   "dependencies": {
+      "copyfiles": "^2.4.1"
+   },
+   "adonisjs": {
+      "instructionsMd": "./build/instructions.md",
+      "types": "@isimisi/adonis-sse",
+      "providers": [
+         "@isimisi/adonis-sse"
+      ],
+      "templates": {
+         "config": [
+            "sse.txt"
+         ]
+      }
+   },
+   "config": {
+      "commitizen": {
+         "path": "cz-conventional-changelog"
+      }
+   }
+}
