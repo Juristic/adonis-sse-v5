@@ -61,3 +61,7 @@ function MyComponent() {
 
 export default MyComponent
 ```
+
+## Disclamer
+
+I have not created tests via. japa but I have tested the functionallity. Please feel free to report any issues.
