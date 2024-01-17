@@ -69,8 +69,15 @@ export default class EventStream {
       }
    }
 
-   async init(source: InstanceType<EventSourceContract>) {
+   private hasValidAcceptHeaders(acceptHeader: string[] | string) {
+      return (
+         acceptHeader.includes('application/json') ||
+         acceptHeader.includes('text/event-stream') ||
+         acceptHeader.includes('*/*')
+      );
+   }
 
+   async init(source: InstanceType<EventSourceContract>) {
       await source.ready();
 
       const prepareTextData = function (data: any) {
@@ -112,10 +119,7 @@ export default class EventStream {
          res: ServerResponse,
          next: () => Promise<void>
       ) {
-         if (
-            (req.headers['accept'] || '').indexOf('application/json') > -1 ||
-            (req.headers['accept'] || '').indexOf('text/event-stream') > -1
-         ) {
+         if (this.hasValidAcceptHeaders(req.headers['accept'] || '')) {
             const isIE =
                req.headers['ua-cpu'] ||
                (req.headers['user-agent'] || 'unknown').match(
@@ -140,7 +144,7 @@ export default class EventStream {
             // browsers can disconnect at will despite the 'Connection: keep-alive'
             // so we trick the browser to expect more data by sending SSE comments
 
-            let intervalId: NodeJS.Timer | null = null;
+            let intervalId: NodeJS.Timeout | null = null;
 
             if (req.headers['connection'] !== 'keep-alive') {
                intervalId = setInterval(function () {
@@ -150,7 +154,6 @@ export default class EventStream {
 
             // Increase number of event listeners on init
             source.setMaxListeners(source.getMaxListeners() + 1);
-
 
             const dataListener = (payload: Partial<EventSourcePayload>) => {
                if (options.noIds) {
