@@ -88,9 +88,10 @@ export default class SSEProvider {
                this.request.method().toLowerCase() === 'post'
             ) {
                const sse = container.resolveBinding('isimisi/SSE/EventSource');
+               sse.setServerResponse(this.request.response);
                return sse;
             } else {
-               return { send: function () {} };
+               return { send: function () {}, end: function () {} };
             }
          },
          true

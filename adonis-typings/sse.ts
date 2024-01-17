@@ -67,6 +67,8 @@ declare module '@ioc:isimisi/SSE' {
       ready(): Promise<void>;
       clients: T;
       id: string | number | symbol;
+      response: ServerResponse;
+      end: ServerResponse['end'];
    }
 
    export interface EventSourceContract<
@@ -83,11 +85,13 @@ declare module '@ioc:isimisi/SSE' {
          logger: LoggerContract;
          init: (
             source: EventSourceInstance
-         ) => Promise<(
-            request: IncomingMessage,
-            response: ServerResponse,
-            next: () => Promise<void>
-         ) => Promise<void>>;
+         ) => Promise<
+            (
+               request: IncomingMessage,
+               response: ServerResponse,
+               next: () => Promise<void>
+            ) => Promise<void>
+         >;
       };
    }
 

@@ -6,9 +6,11 @@ import {
    EventSourcePayload,
 } from '@ioc:isimisi/SSE';
 import staticImplements from '../../decorators/staticImplements';
+import { ServerResponse } from 'http';
 
 @staticImplements<EventSourceContract>()
 export default class Source extends EventEmitter {
+   public response: ServerResponse;
    private idgenfn: () => string | number | symbol;
    private _id: string | number | symbol;
 
@@ -56,5 +58,15 @@ export default class Source extends EventEmitter {
       };
 
       return this.emit('data', payload);
+   }
+
+   setServerResponse(response: ServerResponse) {
+      if (response instanceof ServerResponse && 'end' in response) {
+         this.response = response;
+      }
+   }
+
+   get end() {
+      return this.response.end;
    }
 }
