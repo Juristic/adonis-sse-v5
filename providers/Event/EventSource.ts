@@ -67,6 +67,6 @@ export default class Source extends EventEmitter {
    }
 
    get end() {
-      return this.response.end;
+      return this.response.end.bind(this.response);
    }
 }
