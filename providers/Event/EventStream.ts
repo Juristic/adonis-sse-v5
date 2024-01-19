@@ -205,6 +205,10 @@ export default class EventStream {
                source.setMaxListeners(source.getMaxListeners() - 1);
                source.clients.remove(source.id.toString());
             });
+
+            req.on('end', () => {
+               intervalId && clearInterval(intervalId);
+            });
          } else {
             throw SSEAcceptException.invoke();
          }
