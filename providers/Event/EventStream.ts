@@ -206,7 +206,7 @@ export default class EventStream {
                source.clients.remove(source.id.toString());
             });
 
-            req.on('end', () => {
+            source.on('end', () => {
                intervalId && clearInterval(intervalId);
             });
          } else {
