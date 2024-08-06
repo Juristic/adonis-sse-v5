@@ -13,12 +13,12 @@ export class SSEMiddleware {
    ) {}
 
    public async handle(
-      { request, sse }: HttpContextContract,
+      { request, sse, response }: HttpContextContract,
       next: () => Promise<void>
    ) {
       try {
          const middlewareFunc = await this.stream.init(sse);
-         await middlewareFunc(request.request, request.response, next);
+         await middlewareFunc(request.request, response.response, next);
       } catch (err) {
          if (err instanceof Exception) {
             throw err;
