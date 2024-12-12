@@ -1,6 +1,6 @@
 {
    "name": "@isimisi/adonis-sse",
-   "version": "0.0.8",
+   "version": "0.0.10",
    "description": "Adonis SSE plugin",
    "main": "build/providers/SSEProvider.js",
    "types": "build/adonis-typings/index.d.ts",
