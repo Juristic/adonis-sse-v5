@@ -188,7 +188,6 @@ export default class EventStream {
 
         // Remove listeners and reduce the number of max listeners on client disconnect
         req.on("close", () => {
-          console.log("CLOSING!!");
           intervalId && clearInterval(intervalId);
           source.removeListener("data", dataListener);
           source.setMaxListeners(source.getMaxListeners() - 1);
@@ -197,6 +196,9 @@ export default class EventStream {
 
         source.on("end", () => {
           intervalId && clearInterval(intervalId);
+          source.removeListener("data", dataListener);
+          source.setMaxListeners(source.getMaxListeners() - 1);
+          source.clients.remove(source.id.toString());
         });
       } else {
         throw SSEAcceptException.invoke();
